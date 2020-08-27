@@ -1,0 +1,14 @@
+<html>
+        <head>
+            {% if titre %}
+                <title>{{ titre }} - Petits gazouillis</title>
+            {% else %}
+                <title>Bienvenue sur petits gazouillis</title>
+            {% endif %}
+        </head>
+        <body>
+                <div>Petits Gazouillis: <a href="/index">Acceuil</a></div>
+                <hr>
+                {% block content %} {% endblock %}
+        </body>
+</html>
