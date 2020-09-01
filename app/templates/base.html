@@ -1,14 +1,25 @@
 <html>
-        <head>
-            {% if titre %}
-                <title>{{ titre }} - Petits gazouillis</title>
-            {% else %}
-                <title>Bienvenue sur petits gazouillis</title>
+    <head>
+        {% if titre %}
+            <title>{{ titre }} - Petits gazouillis</title>
+        {% else %}
+            <title>Bienvenue sur petits gazouillis</title>
+        {% endif %}
+    </head>
+    <body>
+            <div>Petits Gazouillis: 
+                <a href="{{ url_for('index') }}">Acceuil</a></div>
+                <a href="{{ url_for('etablir_session') }}">Etablir session</a>
+            <hr>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for msg in messages %}
+                <li>{{ msg }}</li>
+                {% endfor %}
+            </ul>
             {% endif %}
-        </head>
-        <body>
-                <div>Petits Gazouillis: <a href="/index">Acceuil</a></div>
-                <hr>
-                {% block content %} {% endblock %}
-        </body>
+            {% endwith %}
+            {% block content %} {% endblock %}
+    </body>
 </html>
