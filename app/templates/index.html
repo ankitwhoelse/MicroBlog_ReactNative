@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Les utilisateurs par Ankit</h1>
-    {% for u in utilisateurs %}
-        <p><img src="{{ u.avatar }}">{{ u.nom }}</p>
+    <h1>Bonjour, {{utilisateur.nom}}</h1>
+    <img src="{{utilisateur.avatar}}">
+    {% for p in publications %}
+        <div><p>{{p.auteur.nom}} dits: <b>{{p.corps}}</b></p></div>
     {% endfor %}
 {% endblock %}

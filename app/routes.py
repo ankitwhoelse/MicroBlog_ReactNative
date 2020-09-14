@@ -1,23 +1,78 @@
-from flask import render_template, flash, redirect
-from app import app
-from app.formulaires import FormulaireEtablirSession
+from flask import render_template, flash, redirect, url_for
+from app import app, db
+from app.formulaires import FormulaireEtablirSession, FormulaireEnregistrement
 from app.modeles import Utilisateur
+from flask_login import current_user, login_user, logout_user, login_required
+from flask import request
+from werkzeug.urls import url_parse
+from PIL import Image, ImageDraw, ImageFont
+import random
+import base64
+from io import BytesIO
 
 @app.route('/')
 @app.route('/index')
+@login_required
 def index():
+    utilisateur = current_user
+    publications = current_user.publications.all()
+    return render_template('index.html', titre='Acceuil', utilisateur=utilisateur, publications=publications)
+
+
+@app.route('/enregistrer', methods=['GET', 'POST'])
+def enregistrer():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+    formulaire = FormulaireEnregistrement()
+    if formulaire.validate_on_submit():
+        utilisateur = Utilisateur(nom=formulaire.nom.data, courriel=formulaire.courriel.data)
+        utilisateur.enregistrer_mot_de_passe(formulaire.mot_de_passe.data)
+        fnt = ImageFont.truetype('/usr/share/fonts/truetype/noto/NotoMono-Regular.ttf', 15)
+        image = Image.new('RGB', (128, 128), color='black')
+        for i in range(20):
+            x = random.randint(0, 128)
+            y = random.randint(0, 128)
+            r = random.randint(0, 255)
+            g = random.randint(0, 255)
+            b = random.randint(0, 255)
+            h = random.randint(10, 20)
+            fnt = ImageFont.truetype('/usr/share/fonts/truetype/noto/NotoMono-Regular.ttf', h)
+            d = ImageDraw.Draw(image)
+            d.text((x,y), utilisateur.nom, font=fnt , fill=(r,g,b))
     
-    utilisateurs = Utilisateur.query.all()
+        tampon = BytesIO()
+        image.save(tampon, format="JPEG")
+        # "data:image/jpg; base64,"
+        image_base64 = base64.b64encode(tampon.getvalue()).decode("utf-8")
+        utilisateur.avatar = "data:image/jpg;base64," + image_base64
+        print("data:image/jpg;base64," + image_base64)
 
-    return render_template('index.html', titre='Acceuil', utilisateurs=utilisateurs)
-
-
+        db.session.add(utilisateur)
+        db.session.commit()
+        flash('Felicitations, vous etes maintenant enregirste!')
+        return redirect(url_for('etablir_session'))
+    return render_template('enregistrement.html', title='Enregistrer', formulaire=formulaire)
 
 @app.route('/etablir_session', methods=['GET', 'POST'])
 def etablir_session():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
 
     formulaire = FormulaireEtablirSession()
     if formulaire.validate_on_submit():
-            flash('Etablir une session par utilisateur {}, se_souvenir_de_moi ={}'.format(formulaire.nom.data, formulaire.se_souvenir_de_moi.data))
-            return redirect('/index')
+        utilisateur = Utilisateur.query.filter_by(nom=formulaire.nom.data).first()
+        if utilisateur is None or not utilisateur.valider_mot_de_passe(formulaire.mot_de_passe.data):
+            flash('Nom utilisateur ou mot de passe invalide(s)')
+            return redirect(url_for('etablir_session'))
+        login_user(utilisateur, remember=formulaire.se_souvenir_de_moi.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            return redirect(url_for('index'))
+        return redirect(next_page)
     return render_template('etablir_session.html', titre='Etablir une session', formulaire=formulaire)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
