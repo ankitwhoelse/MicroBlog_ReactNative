@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.modeles import Utilisateur
 
 class FormulaireEtablirSession(FlaskForm):
@@ -25,3 +25,8 @@ class FormulaireEnregistrement(FlaskForm):
         utilisateur = Utilisateur.query.filter_by(courriel=courriel.data).first()
         if utilisateur is not None:
             raise ValidationError('Ce courriel existe deja.')
+
+class FormulaireEditerProfil(FlaskForm):
+    nom = StringField('Nom', validators=[DataRequired()])
+    a_propos_de_moi= TextAreaField('A propos de moi', validators=[Length(min=0, max=140)])
+    soumettre = SubmitField('Soumettre')

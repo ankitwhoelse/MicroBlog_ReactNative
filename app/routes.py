@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, db
-from app.formulaires import FormulaireEtablirSession, FormulaireEnregistrement
+from app.formulaires import FormulaireEtablirSession, FormulaireEnregistrement, FormulaireEditerProfil
 from app.modeles import Utilisateur
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import request
@@ -9,6 +9,14 @@ from PIL import Image, ImageDraw, ImageFont
 import random
 import base64
 from io import BytesIO
+from datetime import datetime
+
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.dernier_acces=datetime.utcnow()
+        db.session.commit()
 
 @app.route('/')
 @app.route('/index')
@@ -18,6 +26,12 @@ def index():
     publications = current_user.publications.all()
     return render_template('index.html', titre='Acceuil', utilisateur=utilisateur, publications=publications)
 
+@app.route('/utilisateur/<nom>')
+@login_required
+def utilisateur(nom):
+    utilisateur = Utilisateur.query.filter_by(nom=nom).first_or_404()
+    publications = utilisateur.publications.all()
+    return render_template('utilisateur.html', utilisateur=utilisateur, publications=publications)
 
 @app.route('/enregistrer', methods=['GET', 'POST'])
 def enregistrer():
@@ -76,3 +90,19 @@ def etablir_session():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/editer_profil', methods=['GET', 'POST'])
+@login_required
+def editer_profil():
+    formulaire = FormulaireEditerProfil()
+    if formulaire.validate_on_submit():
+        current_user.nom = formulaire.nom.data
+        current_user.a_propos_de_moi = formulaire.a_propos_de_moi.data
+        db.session.commit()
+        flash('Vos modifications ont ete sauveguardees.')
+        return redirect(url_for('editer_profil'))
+    elif request.method == 'GET':
+        formulaire.nom.data = current_user.nom
+        formulaire.a_propos_de_moi.data = current_user.a_propos_de_moi
+    return render_template('editer_profil.html', title='Editer profil', formulaire=formulaire)
