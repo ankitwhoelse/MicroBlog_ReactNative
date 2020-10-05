@@ -8,7 +8,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     #BD_TABLES_EFFACER = os.environ.get('BD_TABLES_EFFACER') or [ 'tache' , 'message' , 'notification' , 'followers', 'publication', 'utilisateur']
-    BD_TABLES_EFFACER = os.environ.get('BD_TABLES_EFFACER') or ['publication', 'utilisateur']
+    BD_TABLES_EFFACER = os.environ.get('BD_TABLES_EFFACER') or [ 'partisans', 'publication', 'utilisateur']
     BD_TABLES_CREER = os.environ.get('BD_TABLES_CREER') or [ 'utilisateur', 'publication']
 
     MAIL_SERVER = "localhost"

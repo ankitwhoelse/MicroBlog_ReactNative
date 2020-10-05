@@ -12,24 +12,24 @@
         {% endif %}
     </head>
     <body>
-            <div>Petits Gazouillis: 
-                <a href="{{ url_for('index') }}">Acceuil</a></div>
-                {% if current_user.is_anonymous %}
-                    <a href="{{ url_for('etablir_session') }}">Etablir session</a>
-                {% else %}
-                    <a href="{{ url_for('utilisateur', nom=current_user.nom) }}">Profil</a>
-                    <a href="{{ url_for('logout') }}">Fin de la session</a>
-                {% endif %}
-            <hr>
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <ul>
-                {% for msg in messages %}
-                <li>{{ msg }}</li>
-                {% endfor %}
-            </ul>
+        <div>Petits Gazouillis: 
+            <a href="{{ url_for('index') }}">Acceuil</a></div>
+            {% if current_user.is_anonymous %}
+                <a href="{{ url_for('etablir_session') }}">Etablir session</a>
+            {% else %}
+                <a href="{{ url_for('utilisateur', nom=current_user.nom) }}">Profil</a>
+                <a href="{{ url_for('logout') }}">Fin de la session</a>
             {% endif %}
-            {% endwith %}
-            {% block content %} {% endblock %}
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for msg in messages %}
+            <li>{{ msg }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %} {% endblock %}
     </body>
 </html>

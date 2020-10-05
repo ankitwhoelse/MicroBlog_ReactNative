@@ -37,3 +37,15 @@ def initialisation():
                     if element is not None:
                         db.session.add(element)
                     db.session.commit()
+
+    u1 = Utilisateur.query.filter_by(nom='Harry').first_or_404()
+    u2 = Utilisateur.query.filter_by(nom='Hermione').first_or_404()
+    u3 = Utilisateur.query.filter_by(nom='Ron').first_or_404()
+    u1.devenir_partisan(u2)
+    u1.devenir_partisan(u3)
+    u2.devenir_partisan(u1)
+    db.session.commit()
+    print("Liste des publications suivies par {} (incluant ses propres publications)".format(u1.nom))
+    for p in u1.liste_publications_dont_je_suis_partisan():
+        print("auteur: {} corps: {}".format(p.auteur.nom, p.corps))
+    u1.devenir_partisan(u3)

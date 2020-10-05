@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, db
-from app.formulaires import FormulaireEtablirSession, FormulaireEnregistrement, FormulaireEditerProfil
+from app.formulaires import FormulaireEtablirSession, FormulaireEnregistrement, FormulaireEditerProfil, FormulaireVide
 from app.modeles import Utilisateur
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import request
@@ -23,15 +23,16 @@ def before_request():
 @login_required
 def index():
     utilisateur = current_user
-    publications = current_user.publications.all()
+    publications = current_user.liste_publications_dont_je_suis_partisan().all()
     return render_template('index.html', titre='Acceuil', utilisateur=utilisateur, publications=publications)
 
-@app.route('/utilisateur/<nom>')
+@app.route('/utilisateur/<nom>', methods=['GET', 'POST'])
 @login_required
 def utilisateur(nom):
     utilisateur = Utilisateur.query.filter_by(nom=nom).first_or_404()
     publications = utilisateur.publications.all()
-    return render_template('utilisateur.html', utilisateur=utilisateur, publications=publications)
+    formulaire = FormulaireVide()
+    return render_template('utilisateur.html', utilisateur=utilisateur, publications=publications, formulaire=formulaire)
 
 @app.route('/enregistrer', methods=['GET', 'POST'])
 def enregistrer():
@@ -106,3 +107,43 @@ def editer_profil():
         formulaire.nom.data = current_user.nom
         formulaire.a_propos_de_moi.data = current_user.a_propos_de_moi
     return render_template('editer_profil.html', title='Editer profil', formulaire=formulaire)
+
+
+@app.route('/suivre/<nom>', methods=['POST'])
+@login_required
+def suivre(nom):
+    formulaire = FormulaireVide()
+    if formulaire.validate_on_submit():
+        utilisateur = Utilisateur.query.filter_by(nom=nom).first()
+        if utilisateur is None:
+            flash('Utilisateur {} n\'existe pas.'.format(nom))
+            return redirect(url_for('index'))
+        if utilisateur == current_user:
+            flash('Vous ne pouvez pas vous suivre vous-meme')
+            return redirect(url_for('utilisateur', nom=nom))
+        current_user.devenir_partisan(utilisateur)
+        db.session.commit()
+        flash('Vous suivez maintenant {}!'.format(nom))
+        return redirect(url_for('utilisateur', nom=nom))
+    else:
+        return redirect(url_for('index'))
+
+
+@app.route('/ne_plus_suivre/<nom>', methods=['POST'])
+@login_required
+def ne_plus_suivre(nom):
+    formulaire = FormulaireVide()
+    if formulaire.validate_on_submit():
+        utilisateur = Utilisateur.query.filter_by(nom=nom).first()
+        if utilisateur is None:
+            flash('Utilisateur {} n\'existe pas.'.format(nom))
+            return redirect(url_for('index'))
+        if utilisateur == current_user:
+            flash('Vous ne pouvez pas ne plus vous suivre.')
+            return redirect(url_for('utilisateur', nom=nom))
+        current_user.ne_plus_etre_partisan(utilisateur)
+        db.session.commit()
+        flash('Vous ne suivez plus {}!'.format(nom))
+        return redirect(url_for('utilisateur', nom=nom))
+    else:
+        return redirect(url_for('index'))   
