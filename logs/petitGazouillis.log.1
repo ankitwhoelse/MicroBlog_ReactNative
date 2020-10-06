@@ -1,4 +1,13 @@
-2020-10-05 15:42:55,847 ERROR: Exception on /utilisateur/Harry [GET] [in /home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py:1892]
+2020-10-05 16:00:58,521 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 16:07:00,672 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 16:07:39,486 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 16:08:09,287 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 16:08:32,231 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 16:08:47,808 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 16:10:17,902 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 16:33:50,339 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 19:42:30,151 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 19:42:39,160 ERROR: Exception on /explorer [GET] [in /home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -14,11 +23,32 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/etudiant/projetsPython/petits_gazouillis/app/routes.py", line 34, in utilisateur
-    formulaire = FormulaireVide()
-NameError: name 'FormulaireVide' is not defined
-2020-10-05 15:43:31,446 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
-2020-10-05 15:49:35,410 ERROR: Exception on /ne_plus_suivre/Hermione [POST] [in /home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py:1892]
+  File "/home/etudiant/projetsPython/petits_gazouillis/app/routes.py", line 42, in explorer
+    return render_template('index.html', titre='Explorer', publications=publications)
+  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/templating.py", line 140, in render_template
+    ctx.app,
+  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/jinja2/environment.py", line 1090, in render
+    self.environment.handle_exception()
+  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/jinja2/environment.py", line 832, in handle_exception
+    reraise(*rewrite_traceback_stack(source=source))
+  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/jinja2/_compat.py", line 28, in reraise
+    raise value.with_traceback(tb)
+  File "/home/etudiant/projetsPython/petits_gazouillis/app/templates/index.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/etudiant/projetsPython/petits_gazouillis/app/templates/base.html", line 34, in top-level template code
+    {% block content %} {% endblock %}
+  File "/home/etudiant/projetsPython/petits_gazouillis/app/templates/index.html", line 4, in block "content"
+    <h1>Bonjour, {{utilisateur.nom}}</h1>
+  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/jinja2/environment.py", line 471, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'utilisateur' is undefined
+2020-10-05 19:47:21,266 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 19:49:57,101 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 19:51:44,595 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 19:57:51,735 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 19:57:57,143 ERROR: Exception on / [GET] [in /home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -34,10 +64,12 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/etudiant/projetsPython/petits_gazouillis/app/routes.py", line 137, in ne_plus_suivre
-    utilisateur = Utilisateur.quety.filter_by(nom=nom).first()
-AttributeError: type object 'Utilisateur' has no attribute 'quety'
-2020-10-05 15:50:09,402 ERROR: Exception on /ne_plus_suivre/Hermione [POST] [in /home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py:1892]
+  File "/home/etudiant/projetsPython/petits_gazouillis/app/routes.py", line 36, in index
+    page, app.config['PUBLICATION_PAR_PAGE'], False)
+KeyError: 'PUBLICATION_PAR_PAGE'
+2020-10-05 19:58:20,070 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 20:40:32,632 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
+2020-10-05 20:40:39,091 ERROR: Exception on / [GET] [in /home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -53,66 +85,17 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/etudiant/projetsPython/petits_gazouillis/app/routes.py", line 137, in ne_plus_suivre
-    utilisateur = Utilisateur.query.filter_by(nom=nom).first()
-AttributeError: type object 'Utilisateur' has no attribute 'quety'
-2020-10-05 15:50:14,659 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
-2020-10-05 15:53:31,741 ERROR: Exception on /ne_plus_suivre/Hermione [POST] [in /home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py:1892]
-Traceback (most recent call last):
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
+  File "/home/etudiant/projetsPython/petits_gazouillis/app/routes.py", line 39, in index
+    if publications.has_next else None
+  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/helpers.py", line 370, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 2216, in handle_url_build_error
     reraise(exc_type, exc_value, tb)
   File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
     raise value
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/etudiant/projetsPython/petits_gazouillis/app/routes.py", line 144, in ne_plus_suivre
-    current.user.ne_plus_etre_partisan(utilisateur)
-NameError: name 'current' is not defined
-2020-10-05 15:54:31,411 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
-2020-10-05 15:59:48,691 ERROR: Exception on /suivre/Hermione [POST] [in /home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py:1892]
-Traceback (most recent call last):
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/etudiant/projetsPython/petits_gazouillis/app/routes.py", line 124, in suivre
-    current.user.devenir_partisan(utilisateur)
-NameError: name 'current' is not defined
-2020-10-05 16:00:05,836 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
-2020-10-05 16:00:21,192 ERROR: Exception on /suivre/Hermione [POST] [in /home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py:1892]
-Traceback (most recent call last):
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/etudiant/projetsPython/petits_gazouillis/app/routes.py", line 124, in suivre
-    current.user.devenir_partisan(utilisateur)
-NameError: name 'current' is not defined
+  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/flask/helpers.py", line 358, in url_for
+    endpoint, values, method=method, force_external=external
+  File "/home/etudiant/projetsPython/petits_gazouillis/venv/lib/python3.7/site-packages/werkzeug/routing.py", line 2179, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'index.html' with values ['page']. Did you mean 'index' instead?
+2020-10-05 20:52:50,990 INFO: Demarrage de petits Gazouillis [in /home/etudiant/projetsPython/petits_gazouillis/app/__init__.py:45]
