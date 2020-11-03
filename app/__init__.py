@@ -1,8 +1,10 @@
-from flask import Flask
 from config import Config
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_bootstrap import Bootstrap
+from flask_socketio import SocketIO
 import logging
 from logging.handlers import SMTPHandler
 from logging.handlers import RotatingFileHandler
@@ -10,6 +12,9 @@ import os
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+bootstrap = Bootstrap(app)
+socketio = SocketIO(app)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -44,6 +49,8 @@ if not app.debug:
         app.logger.setLevel(logging.INFO)
         app.logger.info('Demarrage de petits Gazouillis')
                 
+from app.api import bp as api_bp
+app.register_blueprint(api_bp, url_prefix='/api')
 
-from app import routes, modeles, erreurs
-
+from app import routes, modeles
+from app.api import erreurs, auth
